@@ -1,0 +1,17 @@
+.idea
+*.pyc
+*.csv
+*.txt
+*.png
+*.h5
+*.nfs*
+*.sh
+*.out
+*.json
+*.pkl
+*.log
+*.ipynb*
+*.vscode*
+data/*
+models/*
+results/*
