@@ -46,7 +46,7 @@ def calc_xgb_model_shap():
         i = 9
 
 
-def calc_xgb_model_base_shap():
+def xgb_shap_transfer_features():
     org_list = ["worm", "mouse", "cow", "human"]
     for org_name in org_list:
         base_model = xgb.XGBClassifier(kwargs=XGBS_PARAMS)
@@ -67,7 +67,7 @@ def train_models():
         org_model.save(f'models/ann_{org_name}')
 
 
-def calc_model_shap():
+def shap_transfer_features():
     org_list = ["worm", "cow", "human", "mouse"]
     for org_name in org_list:
         base_model = keras.models.load_model(f'models/ann_{org_name}')
@@ -88,7 +88,7 @@ def calc_model_shap():
         i = 9
 
 
-def calc_ann_model_base_shap():
+def ann_shap_transfer_features():
     org_list = ["worm", "cow", "human", "mouse"]
     for org_name in org_list:
         base_model = keras.models.load_model(f'models/ann_{org_name}')
@@ -101,5 +101,5 @@ def calc_ann_model_base_shap():
 
 
 if __name__ == '__main__':
-    calc_xgb_model_base_shap()
-    calc_ann_model_base_shap()
+    xgb_shap_transfer_features()
+    ann_shap_transfer_features()
