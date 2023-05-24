@@ -59,28 +59,6 @@ def calc_xgb_model_base_shap():
         df.to_csv(os.path.join("results", f"xgb_{org_name}_{org_name}.csv"), index=False)
 
 
-def fuck_off():
-    org_list = ["worm", "mouse", "cow", "human"]
-    for org_name in org_list:
-        copy_org_list = copy.deepcopy(org_list)
-        copy_org_list.remove(org_name)
-        for c_org_name in copy_org_list:
-            print(f"---Starting src {org_name} and dst {c_org_name}---")
-            x, y = get_data(c_org_name, "test")
-            base_model = xgb.XGBClassifier(kwargs=XGBS_PARAMS)
-            base_model.load_model(f'models/xgb_{org_name}.dat')
-            c_base_model = xgb.XGBClassifier(kwargs=XGBS_PARAMS)
-            c_base_model.load_model(f'models/xgb_{c_org_name}.dat')
-            base_explainer = shap.TreeExplainer(base_model, x.values[:100])
-            base_shap_values = base_explainer.shap_values(x.values)
-            c_explainer = shap.TreeExplainer(c_base_model, x.values[:100])
-            c_shap_values = c_explainer.shap_values(x.values)
-            sub_res = np.absolute(np.subtract(c_shap_values, base_shap_values)).sum(axis=0)
-            df = pd.DataFrame({"value": sub_res, "name": x.columns}).sort_values("value", ascending=False)
-            df.to_csv(os.path.join("results", f"xgb_{org_name}_{c_org_name}.csv"), index=False)
-        i = 9
-
-
 def train_models():
     for org_name in ["worm", "cow", "human", "mouse"]:
         x, y = get_data(org_name, "train")
@@ -125,8 +103,3 @@ def calc_ann_model_base_shap():
 if __name__ == '__main__':
     calc_xgb_model_base_shap()
     calc_ann_model_base_shap()
-    # fuck_off()
-    # train_xgb_models()
-    # calc_xgb_model_shap()
-    # train_models()
-    # calc_model_shap()
